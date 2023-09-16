@@ -6,7 +6,7 @@ import Model from "./Model";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { showToast } from "../Utility/Toastify";
-
+import logo from "../../public/asset 1.svg";
 const Header = () => {
   const [bigMenu, setBigMenu] = useState(false);
 
@@ -50,7 +50,7 @@ const Header = () => {
         <div className="w-full fixed z-[99999999] top-0 left-0 h-16 ">
           <nav className="w-full h-full px-10 flex items-center justify-between">
             <div className="logo w-[33%] h-full flex justify-start items-center ">
-              <img className="w-10" src="/public/asset 1.svg" alt="" />
+              <img className="w-10" src={logo} alt="" />
               <h1 className="text-2xl mx-2 font-bold hidden md:block lg:block">
                 media<span className="text-pink-500">kits</span>
               </h1>
