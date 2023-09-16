@@ -2,7 +2,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { db } from "../config/firebase";
-
+import logo from "../../public/asset 1.svg";
 import {
   AiFillEdit,
   AiFillSetting,
@@ -224,8 +224,7 @@ const User = () => {
         <div className="row justify-center items-center w-full h-auto  bg-white ">
           <div className="col py-10 gap-20 lg:px-72 px-5 w-full flex justify-center items-center">
             <h5 className="flex justify-center items-center  gap-2">
-              data verified by{" "}
-              <img className="w-5 h-5" src="/public/asset 1.svg" alt="" />{" "}
+              data verified by <img className="w-5 h-5" src={logo} alt="" />{" "}
               <p>
                 media<span className="text-pink-600 ">kits</span>
               </p>

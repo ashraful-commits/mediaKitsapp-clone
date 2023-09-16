@@ -15,7 +15,7 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { BsPlus, BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
-
+import logo from "../../public/asset 1.svg";
 import { Link, useLocation } from "react-router-dom";
 
 import { CgMenuRightAlt } from "react-icons/cg";
@@ -215,7 +215,7 @@ const Edit = () => {
                 className={`logo  w-[33%] h-full flex justify-start items-center `}
               >
                 <div className={`flex justify-start items-center `}>
-                  <img className="w-10" src="/public/asset 1.svg" alt="" />
+                  <img className="w-10" src={logo} alt="" />
                   <h1 className="text-2xl mx-2 text-white font-bold hidden md:block lg:block">
                     media<span className="text-pink-500">kits</span>
                   </h1>
