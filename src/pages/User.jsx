@@ -127,10 +127,19 @@ const User = () => {
                   >
                     <div className="">
                       <h4 className="text-lg flex items-center gap-2">
-                        <span className="w-10 h-10 flex justify-center items-center text-white p-3 bg-pink-600 rounded-full">
-                          MA
+                        <span className="w-10 h-10 flex justify-center items-center text-black p-3 uppercase bg-pink-600 rounded-full">
+                          {
+                            JSON.parse(localStorage.getItem("user"))
+                              .displayName.split(" ")[0]
+                              .split("")[0]
+                          }
+                          {
+                            JSON.parse(localStorage.getItem("user"))
+                              .displayName.split(" ")[1]
+                              .split("")[0]
+                          }
                         </span>{" "}
-                        Md. ashrful alam
+                        {localStorage.getItem("user").displayName}
                       </h4>
                     </div>
                     <div className="flex items-center gap-4">
