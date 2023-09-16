@@ -6,38 +6,51 @@ import { Link } from "react-router-dom";
 
 import { showToast } from "../Utility/Toastify";
 import { collection, query, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import logo from "../../public/asset 1.svg";
-const Home = () => {
-  // const [dropdown, setDropdown] = useState(false);
 
+const Home = () => {
+  // Initialize state to store the list of media kits
   const [list, setList] = useState([]);
 
+  // Use 'useEffect' to fetch data from Firestore when the component mounts
   useEffect(() => {
     try {
-      const fetChData = async () => {
+      const fetchData = async () => {
         const q = query(collection(db, "mediaKites"));
-        let List = [];
+
+        let mediaKitList = [];
         const querySnapshot = await getDocs(q);
 
+        // Iterate through query results and construct media kits
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          List.push({ id: doc.id, ...doc.data() });
+          // 'doc.data()' is never undefined for query doc snapshots
+          console.log(doc.data());
+          mediaKitList.push({ id: doc.id, ...doc.data() });
         });
-        setList(List);
+
+        // Filter media kits based on the currently authenticated user
+        setList(
+          mediaKitList.filter((item) => item.uid === auth.currentUser.uid)
+        );
       };
-      fetChData();
+      fetchData();
     } catch (error) {
       showToast("error", error.message);
     }
   }, []);
+
+  // Initialize state to manage dropdown menu visibility for each media kit
   const [dropdownStates, setDropdownStates] = useState(
     Array(list.length).fill(false)
   );
+
+  // Function to handle deleting a media kit by its ID
   const handleDelete = async (id) => {
     console.log(id);
     try {
       await deleteDoc(doc(db, "mediaKites", id));
+      // Update the list by removing the deleted media kit
       setList([...list.filter((item) => item.id !== id)]);
     } catch (error) {
       showToast("error", error.message);
@@ -46,15 +59,15 @@ const Home = () => {
   return (
     <div className="container-fluid w-full  min-h-screen max-h-auto bg-red-[50%]">
       <div className="row w-full h-full ">
-        <div className="col px-32 lg:px-96 flex justify-center flex-col items-center pt-32 gap-5">
-          <h1 className="text-2xl font-bold">my mediakits</h1>
-          <div className=" w-full justify-center flex gap-5 flex-wrap">
-            <div className="w-full flex justify-center flex-col md:flex-row lg:flex-row  gap-5 flex-wrap">
+        <div className="col mx-10 lg:px-96 flex justify-center flex-col items-center pt-32 gap-5">
+          <h1 className="text-4xl  capitalize font-extrabold">my mediaKits</h1>
+          <div className=" w-full justify-center items-center flex flex-wrap">
+            <div className="w-full flex flex-col  justify-center items-center  md:flex-row lg:flex-row  gap-4 flex-wrap">
               {list?.map((item, index) => {
                 return (
                   <div
                     key={index}
-                    className="w-52 h-80 flex flex-col justify-center items-center gap-2 bg-white rounded-2xl shadow-sm p-3"
+                    className="w-[230px] h-80 flex flex-col justify-center items-center gap-2 bg-white rounded-2xl shadow-sm p-3"
                   >
                     <div className="w-full flex justify-end">
                       <button
@@ -100,20 +113,24 @@ const Home = () => {
                       <Link to="/user">
                         <img className="w-8 h-8" src={logo} alt="" />
                       </Link>
-                      <span>0</span>
+                      <span>{index + 1}</span>
                     </div>
                     <Link
-                      to={"/user"}
+                      to={`/user/${item.id}`}
                       className="text-xs bg-pink-600 w-[70%] px-4 py-2 text-white rounded-full"
                     >
                       VIEW MEDIAKIT
                     </Link>
-                    <Link to={"/edit"} className="text-xs text-pink-600">
+                    <Link
+                      to={`/edit/${item.id}`}
+                      className="text-xs text-pink-600"
+                    >
                       EDIT
                     </Link>
                   </div>
                 );
               })}
+
               <div className="w-52 h-80 flex-col gap-4 bg-gray-300 rounded-2xl flex justify-center items-center shadow-sm">
                 <div className="w-20 h-20 flex justify-center flex-col gap-3 bg-white items-center rounded-full">
                   <Link to="/create" className="w-full h-full">

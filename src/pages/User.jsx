@@ -17,23 +17,42 @@ import Model from "../components/Model";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import MyPDFComponent from "../components/Pdf";
-// import MyPDFComponent from "../components/Pdf";
 
 const User = () => {
+  // Retrieve the user ID from the URL parameters
   const { id } = useParams();
+
+  // State to toggle edit mode
   const [edit, setEdit] = useState(false);
+
+  // State to manage the visibility of the big menu
   const [bigMenu, setBigMenu] = useState(false);
+
+  // State to manage the visibility of the mobile menu
   const [menu, setMenu] = useState(false);
+
+  // State to store media kit data
   const [mediaKit, setMediaKit] = useState({});
 
   useEffect(() => {
-    onSnapshot(doc(db, "mediaKites", id), (doc) => {
+    // Subscribe to changes in the media kit document in Firestore
+    const unsubscribe = onSnapshot(doc(db, "mediaKites", id), (doc) => {
       setMediaKit({ id: id, ...doc.data() });
     });
-  }, []);
+
+    // Unsubscribe when the component unmounts
+    return () => {
+      unsubscribe();
+    };
+  }, [id]);
+
+  // Get the current URL path
   const path = useLocation();
 
+  // Reference for PDF generation
   const pdfRef = useRef();
+
+  // Function to download a PDF version of the media kit
   const downloadPdf = () => {
     const input = pdfRef.current;
 
@@ -61,6 +80,7 @@ const User = () => {
       pdf.save("MediaKites.pdf");
     });
   };
+
   return (
     <>
       {/* //==================download  */}

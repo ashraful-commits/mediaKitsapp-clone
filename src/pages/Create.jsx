@@ -3,19 +3,27 @@ import { AiOutlineClose, AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import { BsPlus } from "react-icons/bs";
 import { showToast } from "../Utility/Toastify";
 import { addDoc, collection } from "firebase/firestore";
-import { db, storage } from "../config/firebase";
-
+import { auth, db, storage } from "../config/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+
+/**
+ * Create is a React component for creating media kits.
+ * It allows users to input information, upload a photo, and connect social accounts.
+ */
 const Create = () => {
+  // State for the current step in the creation process
   const [number, setNumber] = useState(0);
-  const navigate = useNavigate();
+
+  // Function to increment the step number
   const handleIncNumber = () => {
     setNumber(number + 1);
     if (number > 2) {
       setNumber(0);
     }
   };
+
+  // Function to decrement the step number
   const handleDecNumber = () => {
     setNumber(number - 1);
     if (number > 2) {
@@ -23,9 +31,10 @@ const Create = () => {
     }
   };
 
-  // handle tags
+  // State and functions for handling tags
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
+
   const handleTag = (e) => {
     e.preventDefault();
     if (tagInput) {
@@ -33,12 +42,14 @@ const Create = () => {
       setTagInput("");
     }
   };
+
   const handleDeleteTag = (index) => {
-    console.log(index);
-    setTags([...tags.filter((item, ind) => ind != index)]);
+    setTags([...tags.filter((item, ind) => ind !== index)]);
   };
-  //============================handle pohot
+
+  // State and function for handling photo upload
   const [photo, setPhoto] = useState(null);
+
   const handlePhoto = (e) => {
     const storageRef = ref(storage, `images/${e.target.files[0].name}`);
     const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
@@ -68,39 +79,46 @@ const Create = () => {
       }
     );
   };
-  //================================= handle url
+
+  // State and functions for handling other form fields
   const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
+  const [about, setAbout] = useState("");
+
   const handleName = (e) => {
     setName(e.target.value);
   };
-  //================================= handle url
-  const [url, setUrl] = useState("");
+
   const handleUrl = (e) => {
     setUrl(e.target.value);
   };
-  //================================= handle about
-  const [about, setAbout] = useState("");
+
   const handleAbout = (e) => {
     setAbout(e.target.value);
   };
-  //====================================
+
+  // Navigation function for form submission
+  const navigate = useNavigate();
+
   const handFormSubmit = async (e) => {
     e.preventDefault();
     console.log(url, photo, name, about, tags);
     try {
       await addDoc(collection(db, "mediaKites"), {
+        uid: auth.currentUser.uid,
         name,
         photo,
         about,
         url,
         tags,
       });
-      showToast("success", "mediakits created!");
+      showToast("success", "Media kit created!");
       navigate("/");
     } catch (error) {
       showToast("error", error.message);
     }
   };
+
   return (
     <div className="container-fluid flex justify-center items-center w-full h-full">
       <div className="row flex justify-center items-center w-full h-full">
@@ -109,7 +127,7 @@ const Create = () => {
           onSubmit={handFormSubmit}
           className="justify-center items-center w-full h-full"
         >
-          {number == 0 && (
+          {number === 0 && (
             <div className="col mt-20 md:px-10 px-5 w-full h-full lg:px-72">
               <h1 className="my-10 text-xl font-semibold">Create mediakit</h1>
               <div className="bg-white px-10 py-10 flex flex-col justify-center ">
@@ -154,7 +172,7 @@ const Create = () => {
                     </h1>
                     <span className="w-32 relative h-32 bg-gray-300 flex justify-center items-center rounded-xl">
                       {photo ? (
-                        <img src={photo} />
+                        <img src={photo} alt="Uploaded" />
                       ) : (
                         <AiOutlineUser className="text-6xl" />
                       )}
@@ -233,10 +251,9 @@ const Create = () => {
                           >
                             {item}{" "}
                             <button
-                              className=" cursor-pointer"
+                              className="cursor-pointer"
                               onClick={() => handleDeleteTag(index)}
                             >
-                              {" "}
                               <AiOutlineClose />
                             </button>
                           </span>
@@ -251,7 +268,7 @@ const Create = () => {
                         className="focus:outline-none border-b-[2px]  w-[100%] md:w-[60%] lg:w-[50%]"
                         placeholder="tags"
                       />
-                      <button className=" right-2" onClick={handleTag}>
+                      <button className="right-2" onClick={handleTag}>
                         <BsPlus className="text-2xl" />
                       </button>
                     </div>
@@ -268,7 +285,7 @@ const Create = () => {
               </div>
             </div>
           )}
-          {number == 1 && (
+          {number === 1 && (
             <div className="col mt-20 md:px-10 px-5 w-full h-full lg:px-72">
               <h1 className="my-10 text-xl font-semibold">Create mediakit</h1>
 

@@ -5,7 +5,9 @@ import { auth, db } from "../config/firebase";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { showToast } from "../Utility/Toastify";
 import { useNavigate } from "react-router-dom";
+
 const Profile = () => {
+  // State to manage form input fields
   const [input, setInput] = useState({
     first_name: "",
     last_name: "",
@@ -14,26 +16,36 @@ const Profile = () => {
     confirm_new_password: "",
     phone: "",
   });
+
+  // State to handle errors
   const [error, setError] = useState("");
+
+  // React Router's navigation hook
   const navigate = useNavigate();
-  // const [user, setUser] = useState(null);
+
+  // State to control password visibility
   const [showPassword, setShowPassword] = useState(false);
 
+  // Function to toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  //============================================onchange value
+
+  // Function to handle input field changes
   const handleOnchange = (e) => {
     setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+
+  // Function to handle profile update
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
+    // Check if new password matches the confirmation
     if (input.new_password !== input.confirm_new_password) {
-      showToast("error", "confirm password not match");
+      showToast("error", "Confirm password does not match");
       return;
     }
 
@@ -49,29 +61,27 @@ const Profile = () => {
       await updateProfile(currentUser, {
         displayName: newDisplayName,
       });
-      console.log(auth.currentUser.uid);
+
+      // Update user data in Firestore
       await setDoc(doc(db, "users", auth.currentUser.uid), {
         first_name: input.first_name,
         last_name: input.last_name,
         email: input.email,
         phone: input.phone,
-      })
-        .then(() => {
-          navigate("/login");
-        })
-        .catch((error) => {
-          showToast("error", error.message);
-        });
+      });
 
-      showToast("success", "Profile updated");
+      // Navigate to the appropriate page after successful update
+      navigate("/login");
+
+      showToast("success", "Profile updated successfully");
     } catch (error) {
       setError("Error updating profile: " + error.message);
     }
   };
-  //===================================get doc
 
-  //==================================== useEffect
+  // Use useEffect to fetch and populate user data from Firestore
   useEffect(() => {
+    // Check if the user data is available in local storage
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (user && user.uid) {
@@ -89,6 +99,7 @@ const Profile = () => {
               const firstName = disName[0] || "";
               const lastName = disName.slice(1).join(" ") || "";
 
+              // Update input fields with user data
               setInput({
                 first_name: firstName,
                 last_name: lastName,

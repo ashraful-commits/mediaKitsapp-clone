@@ -15,7 +15,6 @@ import { FaAngleDown, FaAngleLeft, FaIntercom } from "react-icons/fa";
 import {
   addDoc,
   collection,
-  doc,
   limit,
   onSnapshot,
   orderBy,
@@ -25,9 +24,13 @@ import {
 import { auth, db } from "../config/firebase";
 import { showToast } from "../Utility/Toastify";
 
+/**
+ * Layouts component serving as the main layout of the application.
+ * It includes a header, chat functionality, and different views (Outlets) based on routes.
+ */
 const Layouts = () => {
+  // State variables for controlling chat and message input
   const [chat, setChat] = useState(false);
-  console.log(chat);
   const [home, setHome] = useState(true);
   const [msg, setMsg] = useState(false);
   const [messageInput, setMessageInput] = useState(false);
@@ -35,16 +38,20 @@ const Layouts = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
+  // Function to handle chat toggle
   const handleChat = (e) => {
-    e.stopPropagation(); // Stop event propagation to prevent closing the model
+    e.stopPropagation(); // Stop event propagation to prevent closing the modal
     if (!chat) {
       setChat(true);
     } else {
       setChat(false);
     }
   };
+
+  // Reference for scrolling to the bottom of the chat messages
   const scrollRef = useRef();
-  console.log(scrollRef);
+
+  // Function to scroll to the bottom of the chat messages
   const scrollTobottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
@@ -54,10 +61,12 @@ const Layouts = () => {
   useEffect(() => {
     scrollTobottom();
   }, [messages]);
+
+  // Function to handle message submission
   const HandleOnsubmit = async (e) => {
     e.preventDefault();
-    if (input.trim() == "") {
-      showToast("warning", "Please type message");
+    if (input.trim() === "") {
+      showToast("warning", "Please type a message");
     }
     try {
       const { uid, displayName } = auth.currentUser;
@@ -65,7 +74,6 @@ const Layouts = () => {
         id: uid,
         message: input,
         name: displayName || "",
-        // photo: photoUrl,
         createdAt: serverTimestamp(),
       });
     } catch (error) {
@@ -73,6 +81,7 @@ const Layouts = () => {
     }
   };
 
+  // Effect to listen for incoming messages
   useEffect(() => {
     const q = query(
       collection(db, "messages"),
@@ -80,18 +89,17 @@ const Layouts = () => {
       limit(50)
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const allmessages = [];
+      const allMessages = [];
       querySnapshot.forEach((doc) => {
-        allmessages.push({ ...doc.data() });
+        allMessages.push({ ...doc.data() });
       });
-      setMessages([...allmessages]);
-      console.log(allmessages);
+      setMessages([...allMessages]);
     });
     return () => unsubscribe;
   }, []);
 
   return (
-    <div className="w-full  bg-gray-100 min-h-screen h-auto">
+    <div className="w-full bg-gray-100 min-h-screen h-auto">
       <Header />
       <Outlet />
       {chat && (
@@ -99,9 +107,11 @@ const Layouts = () => {
           styleS={`w-[400px] bottom-16 shadow-lg z-[99999999999] right-10 rounded-lg overflow-hidden h-[700px]`}
         >
           <form onSubmit={HandleOnsubmit} action="">
-            <div className="chatContainer w-full h-full bg-gradient-to-b from-purple-950  to-white flex flex-col items-center p-3">
+            <div className="chatContainer w-full h-full bg-gradient-to-b from-purple-950 to-white flex flex-col items-center p-3">
+              {/* Chat Home View */}
               {home && (
-                <div className="row flex flex-col  justify-center w-full">
+                <div className="row flex flex-col justify-center w-full">
+                  {/* Chat Header */}
                   <div className="col w-full flex justify-between">
                     <img className="w-10 " src="/public/asset 1.svg" alt="" />
                     <div className="flex gap-3">
@@ -110,12 +120,14 @@ const Layouts = () => {
                       <img className="w-10 " src="/public/asset 1.svg" alt="" />
                     </div>
                   </div>
+                  {/* Chat Intro */}
                   <div className="col mt-20 text-left">
                     <h1 className="text-3xl font-extrabold text-white">
                       <span className="text-purple-200"> Hi there</span> <br />{" "}
                       How can we help?
                     </h1>
                   </div>
+                  {/* Chat Options */}
                   <div className="col  my-10 py-3 relative bg-white rounded-xl justify-between flex items-center px-5 w-full">
                     <div
                       onClick={() => {
@@ -123,9 +135,9 @@ const Layouts = () => {
                       }}
                       className="text-left mx-10"
                     >
-                      <p className="font-bold">Send us a msg</p>
+                      <p className="font-bold">Send us a message</p>
                       <span className="text-sm">
-                        We&apos;ll be back online later today
+                        We'll be back online later today
                       </span>
                     </div>
                     <span>
@@ -143,21 +155,22 @@ const Layouts = () => {
                     className="col   my- py-5 relative bg-white rounded-xl justify-between flex items-center px-5 w-full"
                   >
                     <span className="text-sm">
-                      We&apos;ll be back online later today
+                      We'll be back online later today
                     </span>
-
                     <span>
                       <AiOutlineSearch />
                     </span>
                   </div>
                 </div>
               )}
+
+              {/* Chat Messages View */}
               {msg &&
                 (!messageInput ? (
                   <div className="row w-full flex  flex-col justify-between items-center  h-full msg">
                     <div className="w-full text-center ">
                       <h1 className="text-xl my-2 font-bold text-white">
-                        Message
+                        Messages
                       </h1>
                     </div>
                     <div className="messageList bg-gradient-to-b from-white w-full h-[500px] flex justify-center flex-col  items-center">
@@ -169,7 +182,7 @@ const Layouts = () => {
                       onClick={() => setMessageInput(true)}
                       className="flex px-4 py-1 text-white font-bold rounded-full items-center gap-3 bg-pink-600"
                     >
-                      Send us a msg <AiOutlineSend />
+                      Send us a message <AiOutlineSend />
                     </span>
                   </div>
                 ) : (
@@ -197,10 +210,10 @@ const Layouts = () => {
                       </div>
                       <div>
                         <h1 className="text-lg font-bold text-white my-1">
-                          We&apos;ll be back online later today
+                          We'll be back online later today
                         </h1>
                         <h1 className=" my-2 text-white text-xs ">
-                          Ask us anything , or share your feedback.
+                          Ask us anything, or share your feedback.
                         </h1>
                       </div>
                       {messageInput && (
@@ -251,7 +264,7 @@ const Layouts = () => {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         className="w-full focus:outline-none my-2"
-                        placeholder="Send a msg"
+                        placeholder="Send a message"
                       />
                       <button>
                         <AiOutlineSend />
@@ -259,6 +272,7 @@ const Layouts = () => {
                     </div>
                   </div>
                 ))}
+              {/* Help View */}
               {help && (
                 <div className="row w-full flex  flex-col justify-between items-center  h-full msg">
                   <div className="w-full text-center ">
@@ -280,6 +294,7 @@ const Layouts = () => {
                   </div>
                 </div>
               )}
+              {/* Powered by Intercom */}
               {!messageInput && (
                 <div className="row flex flex-col  justify-center w-full">
                   <div className="row grid grid-cols-3  bg-white justify-between absolute left-0 bottom-6 w-full py-3 ">
@@ -331,6 +346,7 @@ const Layouts = () => {
           </form>
         </Model>
       )}
+      {/* Chat Toggle Button */}
       <button
         onClick={handleChat}
         className="fixed  bottom-[10px]  right-[10px] bg-pink-600 p-2 rounded-full"

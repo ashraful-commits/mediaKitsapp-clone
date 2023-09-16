@@ -1,39 +1,55 @@
-import { AiFillMessage } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { RiEyeFill, RiEyeCloseFill } from "react-icons/ri";
 import { showToast } from "../Utility/Toastify";
+
 const Login = () => {
+  // State to control password visibility
   const [showPassword, setShowPassword] = useState(false);
 
+  // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // State to manage form input fields
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
 
+  // React Router's navigation hook
   const history = useNavigate();
+
+  // Function to handle input field changes
   const handleInputChange = (e) => {
     setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
-  const handleOnsubmit = async (e) => {
+
+  // Function to handle form submission
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Attempt to sign in with email and password using Firebase authentication
       await signInWithEmailAndPassword(auth, input.email, input.password).then(
         (userCredential) => {
+          // Store user data in local storage
           localStorage.setItem("user", JSON.stringify(userCredential.user));
         }
       );
+
+      // Redirect to the home page on successful login
       history("/");
+
+      // Show a success toast notification
       showToast("success", "Login successfully done!");
     } catch (error) {
+      // Show an error toast notification if login fails
       showToast("error", error.message);
     }
   };
@@ -43,7 +59,7 @@ const Login = () => {
         <div className="col justify-center items-center flex w-full h-full px-14">
           <div className="form  flex items-center justify-center w-full h-full">
             <form
-              onSubmit={handleOnsubmit}
+              onSubmit={handleOnSubmit}
               action=""
               className=" flex  flex-col gap-5"
             >

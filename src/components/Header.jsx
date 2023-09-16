@@ -7,11 +7,21 @@ import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { showToast } from "../Utility/Toastify";
 import logo from "../../public/asset 1.svg";
+
+/**
+ * Header component for the application.
+ * This component displays the navigation bar and user profile information.
+ */
 const Header = () => {
   const [bigMenu, setBigMenu] = useState(false);
 
   const path = useLocation();
   const navigate = useNavigate();
+
+  /**
+   * Handles the user logout process.
+   * Signs the user out and redirects to the login page.
+   */
   const handleLogOut = async () => {
     await signOut(auth)
       .then(() => {
@@ -23,14 +33,18 @@ const Header = () => {
         showToast("error", error.message);
       });
   };
+
   const menuRef = useRef();
 
+  /**
+   * Handles click events outside of the user profile menu.
+   * Closes the menu if a click occurs outside of it.
+   */
   const handleClickOutside = (e) => {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
       setBigMenu(false);
     }
   };
-  //================================== handle submit
 
   useEffect(() => {
     // Add a click event listener to the document
@@ -76,12 +90,12 @@ const Header = () => {
               {bigMenu && (
                 <Model
                   styleS={
-                    "w-[250px] z-[9999999999999999999999] h-auto right-0 px-5 flex shadow-lg rounded-xl flex-col gap-5 py-5"
+                    "w-[250px] z-[9999999999999999999999] h-auto right-14 top-18 px-5 flex shadow-lg rounded-xl flex-col gap-5 py-5"
                   }
                 >
                   <div className="">
                     <h4 className="text-lg flex items-center gap-2">
-                      <span className="w-10 h-10 flex justify-center items-center text-black p-3 uppercase bg-pink-600 rounded-full">
+                      <span className="w-10 h-10 flex justify-center items-center text-white p-3 uppercase bg-pink-600 rounded-full">
                         {
                           JSON.parse(localStorage.getItem("user"))
                             .displayName.split(" ")[0]
@@ -93,9 +107,8 @@ const Header = () => {
                             .split("")[0]
                         }
                       </span>{" "}
-                      {localStorage.getItem("user").displayName}
+                      {JSON.parse(localStorage.getItem("user")).displayName}
                     </h4>
-                    <span>{}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <Link to="/profile" className="flex items-center gap-4">

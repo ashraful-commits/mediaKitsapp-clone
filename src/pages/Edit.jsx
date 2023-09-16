@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
-import ReactPlayer from "react-player/lazy";
 
 import {
   AiFillCamera,
@@ -17,9 +16,7 @@ import {
 import { BsPlus, BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
 import logo from "../../public/asset 1.svg";
 import { Link, useLocation } from "react-router-dom";
-
 import { CgMenuRightAlt } from "react-icons/cg";
-
 import { db } from "../config/firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { storage } from "../config/firebase";
@@ -28,37 +25,44 @@ import { showToast } from "../Utility/Toastify";
 import Model from "../components/Model";
 
 const Edit = () => {
-  const [contact, setContact] = useState(false);
-  const { id } = useParams();
-  const [editMenu, setEditMenu] = useState(false);
+  // State variables for managing various aspects of the component
+  const [contact, setContact] = useState(false); // Toggle for contact
+  const { id } = useParams(); // Get the 'id' parameter from the URL
+  const [editMenu, setEditMenu] = useState(false); // Toggle for editing menu
 
-  const [name, setName] = useState("");
-  const [InputTag, setInputTag] = useState("");
-  const [tags, setTags] = useState([]);
-  const [about, setAbout] = useState("");
-  const [edit, setEdit] = useState(false);
-  const [bigMenu, setBigMenu] = useState(false);
-  const [menu, setMenu] = useState(false);
-  const [display, setDisplay] = useState(false);
-  const [profile, setProfile] = useState(false);
-  const [background, setBackground] = useState(false);
-  const [video, setVideo] = useState(true);
-  const [videoUrl, setVideoUrl] = useState(null);
-  const [imagesUrl, setImagesUrl] = useState([]);
-  const [url, setUrl] = useState("");
-  const [images, setImages] = useState(false);
-  const [none, setNone] = useState(false);
-  const [scale, setScale] = useState(0);
+  const [name, setName] = useState(""); // User's name
+  const [InputTag, setInputTag] = useState(""); // Input tag field
+  const [tags, setTags] = useState([]); // List of tags
+  const [about, setAbout] = useState(""); // About section
+  const [edit, setEdit] = useState(false); // Toggle for editing
+  const [bigMenu, setBigMenu] = useState(false); // Toggle for a big menu
+  const [menu, setMenu] = useState(false); // Toggle for menu
+  const [display, setDisplay] = useState(false); // Toggle for display
+  const [profile, setProfile] = useState(false); // Toggle for profile
+  const [background, setBackground] = useState(false); // Toggle for background
+  const [video, setVideo] = useState(true); // Toggle for video section
+  const [videoUrl, setVideoUrl] = useState(""); // URL for uploaded video
+  const [imagesUrl, setImagesUrl] = useState([]); // List of image URLs
+  const [url, setUrl] = useState(""); // URL
+  const [images, setImages] = useState(false); // Toggle for images section
+  const [none, setNone] = useState(false); // Toggle for none
+  const [scale, setScale] = useState(0); // Scale factor
 
-  const [horizontal, setHorizontal] = useState(0);
-  const [vertical, setVertical] = useState(0);
+  const [horizontal, setHorizontal] = useState(0); // Horizontal position
+  const [vertical, setVertical] = useState(0); // Vertical position
 
-  //======================handlePhoto
+  // State variable for managing the uploaded photo
   const [photo, setPhoto] = useState(null);
+
+  // Use the 'useNavigate' hook to manage navigation
   const navigate = useNavigate();
+
+  // Function to handle the uploading of a photo
   const handlePhoto = (e) => {
     const storageRef = ref(storage, `images/${e.target.files[0].name}`);
     const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+
+    // Event handlers for upload progress and completion
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -84,10 +88,13 @@ const Edit = () => {
       }
     );
   };
-  //=============== upload video
+
+  // Function to handle the uploading of a video
   const hnadleVideo = (e) => {
     const storageRef = ref(storage, `video/${e.target.files[0].name}`);
     const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+
+    // Event handlers for upload progress and completion
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -113,11 +120,13 @@ const Edit = () => {
       }
     );
   };
-  //=================================== handle multiple images
+
+  // Function to upload multiple images
   async function uploadFiles(file) {
     const storageRef = ref(storage, `images/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
+    // Event handlers for upload progress and completion
     uploadTask.on(
       "state_changed",
       () => {
@@ -143,6 +152,8 @@ const Edit = () => {
       }
     );
   }
+
+  // Function to handle the uploading of multiple images
   const handleMultipleImages = async (e) => {
     const AllImages = [...e.target.files];
 
@@ -150,8 +161,8 @@ const Edit = () => {
       uploadFiles(element);
     });
   };
-  //==================================
-  //============================= tag
+
+  // Function to handle adding tags
   const handleTagArray = (e) => {
     e.preventDefault();
     if (InputTag) {
@@ -161,12 +172,13 @@ const Edit = () => {
       showToast("error", "add tags");
     }
   };
-  //============================= tag
+
+  // Function to handle deleting tags
   const handleTageDelete = (index) => {
     setTags([...tags.filter((item, Ind) => Ind !== index)]);
   };
 
-  //====================================== handle submit
+  // Function to handle submitting the updated media kit
   const handleEditMediakits = async () => {
     try {
       const q = doc(db, "mediaKites", id);
@@ -177,15 +189,19 @@ const Edit = () => {
         tags: tags,
         url,
         imagesUrl: imagesUrl,
-        videoUrl,
+        videoUrl: videoUrl,
       });
       navigate(`/user/${id}`);
-      showToast("success", "updated successfull");
+      showToast("success", "updated successfully");
     } catch (error) {
       showToast("error", error.message);
     }
   };
+
+  // Use the 'useLocation' hook to manage the current path
   const path = useLocation();
+
+  // Use 'useEffect' to subscribe to document changes in Firestore
   useEffect(() => {
     onSnapshot(doc(db, "mediaKites", id), (doc) => {
       const data = doc.data();
@@ -301,7 +317,7 @@ const Edit = () => {
                     <Model styleS="w-full top-[50px] right-0 ">
                       <ul className=" flex flex-col w-full p-5">
                         <li className="w-full py-2">
-                          <Link to="/profile">edit profile</Link>
+                          <Link to={`/profile/${id}`}>edit profile</Link>
                         </li>
                         <li className="w-full py-2">
                           <Link to="/">my mediakits</Link>

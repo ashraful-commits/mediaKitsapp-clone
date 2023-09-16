@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../config/firebase";
@@ -7,6 +6,7 @@ import { showToast } from "../Utility/Toastify";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
+  // State to manage form input fields
   const [input, setInput] = useState({
     first_name: "",
     last_name: "",
@@ -15,29 +15,37 @@ const Register = () => {
     confirm_password: "",
   });
 
+  // State to control password visibility
   const [showPassword, setShowPassword] = useState(false);
 
+  // Function to toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  // React Router's navigation hook
   const navigate = useNavigate();
-  //============================================onchange value
+
+  // Function to handle input field changes
   const handleOnchange = (e) => {
     setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+
+  // Function to handle user registration
   const handleSignUp = async (e) => {
     e.preventDefault();
 
+    // Check if the password and confirm_password fields match
     if (input.password !== input.confirm_password) {
-      showToast("error", "password not match!");
+      showToast("error", "Passwords do not match!");
       return;
     }
 
     try {
-      // Create user with email and password
+      // Create a user with email and password using Firebase authentication
       const email = input.email;
       const password = input.password;
       const userCredential = await createUserWithEmailAndPassword(
@@ -45,19 +53,26 @@ const Register = () => {
         email,
         password
       );
-      // Update the user's display name with first name and last name
+
+      // Get the user object from the credential
       const user = userCredential.user;
+
       // Update the user's display name with first name and last name
       await updateProfile(user, {
         displayName: `${input.first_name} ${input.last_name}`,
       });
 
+      // Show a success toast notification
       showToast("success", "User registered successfully");
+
+      // Navigate to the login page
       navigate("/login");
     } catch (error) {
+      // Show an error toast notification if registration fails
       showToast("error", error.message);
     }
   };
+
   return (
     <div className="w-full flex justify-center items-center min-h-screen max-h-auto">
       <div className="row justify-center items-center flex w-full h-full">
