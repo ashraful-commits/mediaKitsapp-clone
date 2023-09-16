@@ -587,10 +587,10 @@ const Edit = () => {
                           )}
                           {images && (
                             <div
-                              className={`images w-full h-[200px] ${
+                              className={`images w-full min-h-[200px] ${
                                 imagesUrl?.length > 0 ? "overflow-scroll" : ""
                               }
-                               flex justify-center relative items-center bg-gray-700 flex-col gap-3`}
+                               flex justify-center relative items-start bg-gray-700 flex-col gap-3`}
                             >
                               <span
                                 onClick={() => setImagesUrl([])}
@@ -599,7 +599,7 @@ const Edit = () => {
                                 <AiOutlineClose />
                               </span>
                               {imagesUrl?.length > 0 ? (
-                                <div>
+                                <div className="flex flex-col justify-center">
                                   {imagesUrl?.map((item, index) => {
                                     return (
                                       <img
