@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { showToast } from "../Utility/Toastify";
 import { collection, query, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import logo from "../../public/asset 1.svg";
 const Home = () => {
   // const [dropdown, setDropdown] = useState(false);
 
@@ -97,11 +98,7 @@ const Home = () => {
                     </div>
                     <div className="flex justify-center items-center gap-4 my-4">
                       <Link to="/user">
-                        <img
-                          className="w-8 h-8"
-                          src="/public/asset 1.svg"
-                          alt=""
-                        />
+                        <img className="w-8 h-8" src={logo} alt="" />
                       </Link>
                       <span>0</span>
                     </div>
