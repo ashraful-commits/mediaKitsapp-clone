@@ -3,9 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-
+import { RiEyeFill, RiEyeCloseFill } from "react-icons/ri";
 import { showToast } from "../Utility/Toastify";
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -40,7 +45,7 @@ const Login = () => {
             <form
               onSubmit={handleOnsubmit}
               action=""
-              className=" flex flex-col gap-5"
+              className=" flex  flex-col gap-5"
             >
               <img className="w-10 my-5" src="/public/asset 10.svg" alt="" />
               <h1 className="my-5 text-3xl">welcome back !</h1>
@@ -52,15 +57,23 @@ const Login = () => {
                 type="text"
                 placeholder="email"
               />
-              <input
-                name="password"
-                value={input.password}
-                onChange={handleInputChange}
-                className="border-b border-black py-2 focus:outline-none bg-transparent"
-                type="password"
-                placeholder="password"
-              />
-
+              <div className="relative flex">
+                <input
+                  name="password"
+                  value={input.password}
+                  onChange={handleInputChange}
+                  className="border-b border-black  w-full py-2 focus:outline-none bg-transparent"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="password"
+                />
+                <button
+                  type="button"
+                  className="absolute top-5 right-0"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <RiEyeCloseFill /> : <RiEyeFill />}
+                </button>
+              </div>
               <button
                 type="submit"
                 className="bg-pink-600 py-2 rounded-full text-white font-bold"
@@ -83,9 +96,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <button className="bg-pink-500 fixed bottom-10 right-10 rounded-full">
-        <AiFillMessage className=" text-4xl text-white p-1" />
-      </button>
     </div>
   );
 };
