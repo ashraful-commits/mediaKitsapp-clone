@@ -6,7 +6,11 @@ import { addDoc, collection } from "firebase/firestore";
 import { auth, db, storage } from "../config/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
-
+import instagram from "../../public/instagram-circle.91084741.svg";
+import tiktok from "../../public/tiktok-black.04bf356b.svg";
+import twitter from "../../public/twitter-service-icon.5c4d8568.svg";
+import youtube from "../../public/youtube-service-icon.c2d0029e.svg";
+import facebook from "../../public/facebook-service-icon.f38a2125.svg";
 /**
  * Create is a React component for creating media kits.
  * It allows users to input information, upload a photo, and connect social accounts.
@@ -336,35 +340,35 @@ const Create = () => {
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="/public/facebook-service-icon.f38a2125.svg"
+                      src={facebook}
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="/public/instagram-circle.91084741.svg"
+                      src={instagram}
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="/public/tiktok-black.04bf356b.svg"
+                      src={tiktok}
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="/public/twitter-service-icon.5c4d8568.svg"
+                      src={twitter}
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="/public/youtube-service-icon.c2d0029e.svg"
+                      src={youtube}
                       alt=""
                     />
                   </span>
