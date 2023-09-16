@@ -81,7 +81,7 @@ const Header = () => {
                 >
                   <div className="">
                     <h4 className="text-lg flex items-center gap-2">
-                      <span className="w-10 h-10 flex justify-center items-center text-white p-3 uppercase bg-pink-600 rounded-full">
+                      <span className="w-10 h-10 flex justify-center items-center text-black p-3 uppercase bg-pink-600 rounded-full">
                         {
                           JSON.parse(localStorage.getItem("user"))
                             .displayName.split(" ")[0]
@@ -95,6 +95,7 @@ const Header = () => {
                       </span>{" "}
                       {localStorage.getItem("user").displayName}
                     </h4>
+                    <span>{}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <Link to="/profile" className="flex items-center gap-4">
