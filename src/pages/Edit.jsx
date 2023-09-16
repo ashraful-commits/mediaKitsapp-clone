@@ -215,7 +215,7 @@ const Edit = () => {
                 className={`logo  w-[33%] h-full flex justify-start items-center `}
               >
                 <div className={`flex justify-start items-center `}>
-                  <img className="w-10" src="../../public/asset 1.svg" alt="" />
+                  <img className="w-10" src="/public/asset 1.svg" alt="" />
                   <h1 className="text-2xl mx-2 text-white font-bold hidden md:block lg:block">
                     media<span className="text-pink-500">kits</span>
                   </h1>
@@ -323,11 +323,7 @@ const Edit = () => {
 
           <div className="sidebar max-sm:hidden  bg-gradient-to-r from-[#111f3b] to-[#0b0927] flex z-[99999999] top-0 lef-0 ">
             <div className="menu w-[70px] z-[9999] bg-[#0b0927] flex items-center gap-10 flex-col py-20 h-full">
-              <img
-                className="w-8 shrink-0"
-                src="../../public/asset 1.svg"
-                alt=""
-              />
+              <img className="w-8 shrink-0" src="/public/asset 1.svg" alt="" />
               <ul className="text-white w-full space-y-5">
                 <li className=" py-2 flex justify-center">
                   <span className="relative cursor-pointer bg-gray-500 rounded-full p-1">
@@ -807,11 +803,7 @@ const Edit = () => {
               <div className="col py-10 gap-20 lg:px-72 px-5 w-full flex justify-center items-center">
                 <h5 className="flex justify-center items-center  gap-2">
                   data verified by{" "}
-                  <img
-                    className="w-5 h-5"
-                    src="../../public/asset 1.svg"
-                    alt=""
-                  />{" "}
+                  <img className="w-5 h-5" src="/public/asset 1.svg" alt="" />{" "}
                   <p>
                     media<span className="text-pink-600 ">kits</span>
                   </p>

@@ -319,35 +319,35 @@ const Create = () => {
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="../../public/facebook-service-icon.f38a2125.svg"
+                      src="/public/facebook-service-icon.f38a2125.svg"
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="../../public/instagram-circle.91084741.svg"
+                      src="/public/instagram-circle.91084741.svg"
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="../../public/tiktok-black.04bf356b.svg"
+                      src="/public/tiktok-black.04bf356b.svg"
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="../../public/twitter-service-icon.5c4d8568.svg"
+                      src="/public/twitter-service-icon.5c4d8568.svg"
                       alt=""
                     />
                   </span>
                   <span className="p-10 overflow-hidden border rounded-2xl ">
                     <img
                       className=" w-14 h-14 object-cover"
-                      src="../../public/youtube-service-icon.c2d0029e.svg"
+                      src="/public/youtube-service-icon.c2d0029e.svg"
                       alt=""
                     />
                   </span>

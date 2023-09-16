@@ -99,7 +99,7 @@ const Home = () => {
                       <Link to="/user">
                         <img
                           className="w-8 h-8"
-                          src="../../public/asset 1.svg"
+                          src="/public/asset 1.svg"
                           alt=""
                         />
                       </Link>

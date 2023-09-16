@@ -1,6 +1,7 @@
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PublicGird from "./PublicGird";
+
 const PublicRotes = [
   {
     element: <PublicGird />,

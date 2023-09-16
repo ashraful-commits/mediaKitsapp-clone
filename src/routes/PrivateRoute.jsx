@@ -4,11 +4,11 @@ import Create from "../pages/Create";
 import User from "../pages/User";
 import Edit from "../pages/Edit";
 import Profile from "../pages/Profile";
-import PriveteGard from "./PriveteGard";
+import PrivetGard from "./PriveteGard";
 
 const PrivateRoute = [
   {
-    element: <PriveteGard />,
+    element: <PrivetGard />,
     children: [
       {
         element: <Layouts />,

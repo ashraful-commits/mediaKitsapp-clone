@@ -103,27 +103,11 @@ const Layouts = () => {
               {home && (
                 <div className="row flex flex-col  justify-center w-full">
                   <div className="col w-full flex justify-between">
-                    <img
-                      className="w-10 "
-                      src="../../public/asset 1.svg"
-                      alt=""
-                    />
+                    <img className="w-10 " src="/public/asset 1.svg" alt="" />
                     <div className="flex gap-3">
-                      <img
-                        className="w-10 "
-                        src="../../public/asset 1.svg"
-                        alt=""
-                      />
-                      <img
-                        className="w-10 "
-                        src="../../public/asset 1.svg"
-                        alt=""
-                      />
-                      <img
-                        className="w-10 "
-                        src="../../public/asset 1.svg"
-                        alt=""
-                      />
+                      <img className="w-10 " src="/public/asset 1.svg" alt="" />
+                      <img className="w-10 " src="/public/asset 1.svg" alt="" />
+                      <img className="w-10 " src="/public/asset 1.svg" alt="" />
                     </div>
                   </div>
                   <div className="col mt-20 text-left">
@@ -197,17 +181,17 @@ const Layouts = () => {
                       <div className="flex justify-center -gap-5 items-center my-10">
                         <img
                           className="w-14"
-                          src="../../public/asset 1.svg"
+                          src="/public/asset 1.svg"
                           alt=""
                         />
                         <img
                           className="w-14"
-                          src="../../public/asset 1.svg"
+                          src="/public/asset 1.svg"
                           alt=""
                         />
                         <img
                           className="w-14"
-                          src="../../public/asset 1.svg"
+                          src="/public/asset 1.svg"
                           alt=""
                         />
                       </div>

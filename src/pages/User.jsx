@@ -71,7 +71,7 @@ const User = () => {
               className={`logo  w-[33%] h-full flex justify-start items-center `}
             >
               <div className={`flex justify-start items-center `}>
-                <img className="w-10" src="../../public/asset 1.svg" alt="" />
+                <img className="w-10" src="/public/asset 1.svg" alt="" />
                 <h1 className="text-2xl mx-2 text-white font-bold hidden md:block lg:block">
                   media<span className="text-pink-500">kits</span>
                 </h1>
@@ -225,7 +225,7 @@ const User = () => {
           <div className="col py-10 gap-20 lg:px-72 px-5 w-full flex justify-center items-center">
             <h5 className="flex justify-center items-center  gap-2">
               data verified by{" "}
-              <img className="w-5 h-5" src="../../public/asset 1.svg" alt="" />{" "}
+              <img className="w-5 h-5" src="/public/asset 1.svg" alt="" />{" "}
               <p>
                 media<span className="text-pink-600 ">kits</span>
               </p>
