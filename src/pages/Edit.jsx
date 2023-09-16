@@ -332,7 +332,7 @@ const Edit = () => {
 
           <div className="sidebar max-sm:hidden  bg-gradient-to-r from-[#111f3b] to-[#0b0927] flex z-[99999999] top-0 lef-0 ">
             <div className="menu w-[70px] z-[9999] bg-[#0b0927] flex items-center gap-10 flex-col py-20 h-full">
-              <img className="w-8 shrink-0" src="/public/asset 1.svg" alt="" />
+              <img className="w-8 shrink-0" src={logo} alt="" />
               <ul className="text-white w-full space-y-5">
                 <li className=" py-2 flex justify-center">
                   <span className="relative cursor-pointer bg-gray-500 rounded-full p-1">
