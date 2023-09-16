@@ -82,7 +82,7 @@ const Profile = () => {
   // Use useEffect to fetch and populate user data from Firestore
   useEffect(() => {
     // Check if the user data is available in local storage
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = auth?.currentUser;
 
     if (user && user.uid) {
       const docRef = doc(db, "users", user.uid);
@@ -133,10 +133,19 @@ const Profile = () => {
             <div className="profile bg-white px-5 my-10 rounded-2xl shadow-sm">
               <div className="user  border-b-2 border-pink-600 pt-10 pb-5 flex justify-center items-center flex-col">
                 <span className="text-3xl my-3 w-20 h-20 rounded-full bg-pink-600 flex justify-center text-white font-bold items-center">
-                  MA
+                  {
+                    JSON.parse(localStorage.getItem("user"))
+                      .displayName.split(" ")[0]
+                      .split("")[0]
+                  }
+                  {
+                    JSON.parse(localStorage.getItem("user"))
+                      .displayName.split(" ")[1]
+                      .split("")[0]
+                  }
                 </span>
                 <h1 className="text-xl font-bold capitalize">
-                  Md. ashraful alam
+                  {JSON.parse(localStorage.getItem("user")).displayName}
                 </h1>
                 <span>basic info</span>
               </div>

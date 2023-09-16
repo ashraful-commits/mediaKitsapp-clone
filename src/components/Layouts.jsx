@@ -57,7 +57,7 @@ const Layouts = () => {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  console.log(auth.currentUser?.uid);
   useEffect(() => {
     scrollTobottom();
   }, [messages]);
@@ -71,6 +71,7 @@ const Layouts = () => {
     try {
       const { uid, displayName } = auth.currentUser;
       await addDoc(collection(db, "messages"), {
+        chatId: uid + "1ZhcVjEY2aSjVBgg9ykop7hhI0t2",
         id: uid,
         message: input,
         name: displayName || "",
@@ -93,7 +94,15 @@ const Layouts = () => {
       querySnapshot.forEach((doc) => {
         allMessages.push({ ...doc.data() });
       });
-      setMessages([...allMessages]);
+      setMessages([
+        ...allMessages.filter(
+          (item) =>
+            item.chatId ===
+              auth.currentUser?.uid + "1ZhcVjEY2aSjVBgg9ykop7hhI0t2" ||
+            item.chatId ===
+              "1ZhcVjEY2aSjVBgg9ykop7hhI0t2" + auth.currentUser?.uid
+        ),
+      ]);
     });
     return () => unsubscribe;
   }, []);
@@ -192,21 +201,16 @@ const Layouts = () => {
                         MediaKits
                       </h1>
                       <div className="flex justify-center -gap-5 items-center my-10">
-                        <img
-                          className="w-14"
-                          src="/public/asset 1.svg"
-                          alt=""
-                        />
-                        <img
-                          className="w-14"
-                          src="/public/asset 1.svg"
-                          alt=""
-                        />
-                        <img
-                          className="w-14"
-                          src="/public/asset 1.svg"
-                          alt=""
-                        />
+                        {messages.map((item, index) => {
+                          return (
+                            <span
+                              className="w-10 h-10 rounded-full border flex justify-center items-center text-purple-600 bg-white"
+                              key={index}
+                            >
+                              {item.name.split("")[0]}
+                            </span>
+                          );
+                        })}
                       </div>
                       <div>
                         <h1 className="text-lg font-bold text-white my-1">
