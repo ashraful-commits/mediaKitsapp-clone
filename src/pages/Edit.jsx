@@ -126,7 +126,7 @@ const Edit = () => {
       (error) => {
         console.error(`Upload of ${file.name} failed: ${error}`);
       },
-      async (snapshot) => {
+      async () => {
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           if (downloadURL) {

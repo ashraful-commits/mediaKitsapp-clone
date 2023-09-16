@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AiFillSetting, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
 
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Model from "./Model";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
