@@ -1,7 +1,7 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { db } from "../../../src/config/firebase";
+import { db } from "../config/firebase";
 
 import {
   AiFillEdit,
@@ -100,7 +100,10 @@ const User = () => {
             <div className="profile h-full w-[33%] flex justify-end items-center">
               <div className="flex items-center gap-5 mx-2">
                 <div className="flex items-center text-b gap-2 text-white text-xs">
-                  <button onClick={downloadPdf}>
+                  <button
+                    onClick={downloadPdf}
+                    className="flex items-center gap-2"
+                  >
                     {" "}
                     <AiOutlineArrowDown className="text-lg text-white font-extrabold" />{" "}
                     <span className="hidden md:block lg:block">
@@ -119,7 +122,7 @@ const User = () => {
                 {bigMenu && (
                   <Model
                     styleS={
-                      "w-[250px]  h-auto right-0 px-5 flex shadow-lg rounded-xl flex-col gap-5 py-5"
+                      "w-[250px]  h-auto lg:right-[14%] md:right-[8%] right-0 px-5 flex shadow-lg rounded-xl flex-col gap-5 py-5"
                     }
                   >
                     <div className="">

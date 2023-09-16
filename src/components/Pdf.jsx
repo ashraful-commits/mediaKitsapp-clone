@@ -1,7 +1,7 @@
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { useEffect, useRef, useState } from "react";
-import { db } from "../../../src/config/firebase";
+import { db } from "../config/firebase";
 const MyPDFComponent = ({ id }) => {
   const pdfRef = useRef();
   const [mediaKit, setMediaKit] = useState({});

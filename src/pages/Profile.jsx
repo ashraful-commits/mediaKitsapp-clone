@@ -1,7 +1,7 @@
 import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../../src/config/firebase";
+import { auth, db } from "../config/firebase";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { showToast } from "../Utility/Toastify";
 import { useNavigate } from "react-router-dom";

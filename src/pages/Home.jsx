@@ -4,11 +4,12 @@ import { BiMessageRoundedDots } from "react-icons/bi";
 import Model from "../components/Model";
 import { Link } from "react-router-dom";
 
-import { db } from "../../../src/config/firebase";
 import { showToast } from "../Utility/Toastify";
 import { collection, query, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../config/firebase";
 const Home = () => {
-  const [dropdown, setDropdown] = useState(false);
+  // const [dropdown, setDropdown] = useState(false);
+
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -17,9 +18,8 @@ const Home = () => {
         const q = query(collection(db, "mediaKites"));
         let List = [];
         const querySnapshot = await getDocs(q);
-        console.log(querySnapshot);
+
         querySnapshot.forEach((doc) => {
-          console.log(doc.data());
           // doc.data() is never undefined for query doc snapshots
           List.push({ id: doc.id, ...doc.data() });
         });
@@ -30,6 +30,9 @@ const Home = () => {
       showToast("error", error.message);
     }
   }, []);
+  const [dropdownStates, setDropdownStates] = useState(
+    Array(list.length).fill(false)
+  );
   const handleDelete = async (id) => {
     console.log(id);
     try {
@@ -55,10 +58,15 @@ const Home = () => {
                     <div className="w-full flex justify-end">
                       <button
                         className="relative"
-                        onClick={() => setDropdown(!dropdown)}
+                        onClick={() => {
+                          const updatedDropdownStates = [...dropdownStates];
+                          updatedDropdownStates[index] =
+                            !updatedDropdownStates[index];
+                          setDropdownStates(updatedDropdownStates);
+                        }}
                       >
                         <BsThreeDotsVertical />
-                        {dropdown && (
+                        {dropdownStates[index] && (
                           <Model styleS={"top-0 right-3 "}>
                             <ul className="flex flex-col gap-3 p-1 text-xs">
                               <li>

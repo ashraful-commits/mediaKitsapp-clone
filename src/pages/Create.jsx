@@ -28,7 +28,10 @@ const Create = () => {
   const [tagInput, setTagInput] = useState("");
   const handleTag = (e) => {
     e.preventDefault();
-    setTags((prev) => [...prev, tagInput]);
+    if (tagInput) {
+      setTags((prev) => [...prev, tagInput]);
+      setTagInput("");
+    }
   };
   const handleDeleteTag = (index) => {
     console.log(index);

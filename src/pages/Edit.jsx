@@ -20,7 +20,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { CgMenuRightAlt } from "react-icons/cg";
 
-import { db } from "../../../src/config/firebase";
+import { db } from "../config/firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { storage } from "../config/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";

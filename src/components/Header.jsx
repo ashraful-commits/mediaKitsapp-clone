@@ -9,7 +9,7 @@ import {
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Model from "./Model";
 import { signOut } from "firebase/auth";
-import { auth } from "../../../src/config/firebase";
+import { auth } from "../config/firebase";
 import { showToast } from "../Utility/Toastify";
 
 const Header = () => {
