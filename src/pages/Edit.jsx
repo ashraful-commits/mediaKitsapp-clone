@@ -188,8 +188,8 @@ const Edit = () => {
         about,
         tags: tags,
         url,
-        imagesUrl: imagesUrl,
-        videoUrl: videoUrl,
+        imagesUrl: imagesUrl ? imagesUrl : [],
+        videoUrl: videoUrl ? videoUrl : "",
       });
       navigate(`/user/${id}`);
       showToast("success", "updated successfully");
@@ -213,8 +213,8 @@ const Edit = () => {
       setAbout(data ? data.about : "");
       setPhoto(data ? data.photo : null);
       setUrl(data ? data.url : "");
-      setVideoUrl(data ? data.videoUrl : "");
-      setImagesUrl(data ? [...data.imagesUrl] : []);
+      setVideoUrl(data ? data.videoUrl : null);
+      setImagesUrl(data ? data.imagesUrl : []);
     });
   }, [id]);
   return (
